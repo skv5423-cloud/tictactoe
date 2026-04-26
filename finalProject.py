@@ -120,7 +120,7 @@ class TicTacToe:
         """
 
         # marks the board
-        self.board[point.row][[point.col]] = player
+        self.board[point.row][point.col] = player
 
         # for hard mode
         if self.hardMode:
