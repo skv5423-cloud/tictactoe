@@ -4,6 +4,14 @@ class Point:
         self.col = col
 
 class TicTacToe:
+    """
+    Gives users two options:
+        - a regular game that can have ties or win by 3 diagonal, across a row, or down a column
+        - an advanced game where player's can only have 3 marks on a board at a time
+            - the first mark made will be removed when a fourth mark is added
+            - same rules apply in order to win
+            - game will continue and there are no ties
+    """
 
     def __init__(self, mode):
         self.board = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
@@ -29,7 +37,7 @@ class TicTacToe:
     def checkWinner(self):
         """
         This function checks whether a player has won using the current marks on the board.
-        Returns True if a player has won or there is a Tie, False otherwise.
+        Returns True if a player has won or there is a tie, False otherwise.
         """
         board = self.board
         # check for 3 in a row
@@ -59,9 +67,11 @@ class TicTacToe:
     
     def playerMove(self):
         """
-        This function will mark the board according to the user's input.
+        This function will obtain user input and verify whether they can place a mark on the designated spot.
         The function checks if the input is out of bounds or not a number.
         The function also checks if the spot is already taken.
+        Once verified, it will call markBoard, to place a mark or delete one according to game rules.
+        No returns
         """
         player = 'O'
         if self.x_turn:
@@ -89,7 +99,8 @@ class TicTacToe:
                 
                 else:
                     # mark the board with player's mark
-                    self.board[row][col] = player
+                    point = Point(row, col)
+                    self.markBoard(point, player)
 
                     # switch player's turn
                     self.x_turn = not self.x_turn
@@ -98,6 +109,34 @@ class TicTacToe:
 
             except ValueError:
                 print('Invalid input! Please enter a number 0 - 2!')
+
+
+
+    def markBoard(self, point, player):
+        """
+        This function will mark the board with the player's mark given a Point object.
+        If hard mode is on, and there are currently 3 of the player's marks on the board, one will be removed when the new one is added.
+        No returns
+        """
+
+        # marks the board
+        self.board[point.row][[point.col]] = player
+
+        # for hard mode
+        if self.hardMode:
+            # point is added to memory
+            if player == 'X':
+                lst = self.xPoints
+            else:
+                lst = self.oPoints
+            lst.append(point)
+
+            # point is removed from the board and reset to a space
+            if len(lst) == 4:
+                del_point = lst.pop(0)
+                self.board[del_point.row][del_point.col] = ' '
+
+
 
     def playGame(self):
         """
