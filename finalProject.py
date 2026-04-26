@@ -4,6 +4,9 @@ class Point:
         self.col = col
 
 class TicTacToe:
+    PINK = "\033[95m"
+    YELLOW = "\033[93m"
+    RESET = "\033[0m"
     """
     Gives users two options:
         - a regular game that can have ties or win by 3 diagonal, across a row, or down a column
@@ -43,22 +46,22 @@ class TicTacToe:
         # check for 3 in a row
         for row in board:
             if row[0] == row[1] == row[2] and row[0] != ' ':
-                print(f'Player {row[0]} wins!')
+                print(f'{self.PINK}Player {row[0]} wins!{self.RESET}')
                 return True
             
         # check for 3 in a column
         for i in range(3):
             if board[0][i] == board[1][i] == board[2][i] and board[0][i] != ' ':
-                print(f'Player {board[0][i]} wins!')
+                print(f'{self.PINK}Player {board[0][i]} wins!{self.RESET}')
                 return True
             
         # check diagonals
         if board[0][0] == board[1][1] == board[2][2] and board[0][0] != ' ':
-            print(f'Player {board[0][0]} wins!')
+            print(f'{self.PINK}Player {board[0][0]} wins!{self.RESET}')
             return True
         
         if board[0][2] == board[1][1] == board[2][0] and board[0][2] != ' ':
-            print(f'Player {board[0][2]} wins!')
+            print(f'{self.PINK}Player {board[0][2]} wins!{self.RESET}')
             return True
         
         return False
@@ -148,7 +151,7 @@ class TicTacToe:
             self.playerMove()
             has_won = self.checkWinner()
 
-        print(f'Results:\n{self}')
+        print(f'{self.YELLOW}Results:\n{self}{self.RESET}')
 
 
 
