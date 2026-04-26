@@ -157,7 +157,15 @@ class TicTacToe:
 
 
 def main():
-    t = TicTacToe(False)
+    # allows users to select their game mode
+    answer = input('Would you like to play hard mode? (Y/N) ')
+    while answer not in 'YyNn':
+        answer = input('Please enter Y or N: would you like to play hard mode? ')
+    
+    if answer in 'Yy':
+        t = TicTacToe(True)
+    else:
+        t = TicTacToe(False)
     t.playGame()
 
 if __name__ == "__main__":
